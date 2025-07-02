@@ -1,0 +1,165 @@
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useCreateBookMutation } from "@/redux/api/baseApi";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+
+export function AddBook() {
+  const [open, setOpen] = useState(false);
+  const form = useForm();
+
+  const [createBook, { data, isError, isLoading }] = useCreateBookMutation();
+
+  const onSubmit = async (data: any) => {
+    console.log("my books", data);
+    const bookData = {
+      ...data,
+    };
+
+    const res = await createBook(bookData).unwrap();
+
+    setOpen(false);
+    form.reset();
+  };
+
+  
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      {isLoading && <p>Submitting book...</p>}
+      {isError && <p className="text-red-500">Something went wrong.</p>}
+
+      <DialogTrigger asChild>
+        <Button variant="destructive"> Add Task </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Add task</DialogTitle>
+          <DialogDescription>
+            Add task that only you can finish.
+          </DialogDescription>
+        </DialogHeader>
+        <Form {...form}>
+          <form action="" onSubmit={form.handleSubmit(onSubmit)}>
+            <div>
+              <label>Title</label>
+              <FormField
+                control={form.control}
+                name="title"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel />
+                    <FormControl>
+                      <Input {...field} value={field.value || ""} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div>
+              <label>Author</label>
+              <FormField
+                control={form.control}
+                name="author"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel />
+                    <FormControl>
+                      <Input {...field} value={field.value || ""} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div>
+              <label>Genre</label>
+              <FormField
+                control={form.control}
+                name="genre"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel />
+                    <FormControl>
+                      <select {...field} className="w-full border p-2 rounded">
+                        <option value="">Select genre</option>
+                        <option value="FICTION">FICTION</option>
+                        <option value="NON_FICTION">NON_FICTION</option>
+                        <option value="SCIENCE">SCIENCE</option>
+                        <option value="HISTORY">HISTORY</option>
+                        <option value="BIOGRAPHY">BIOGRAPHY</option>
+                        <option value="FANTASY">FANTASY</option>
+                      </select>
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div>
+              <label>ISBN</label>
+              <FormField
+                control={form.control}
+                name="isbn"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel />
+                    <FormControl>
+                      <Input {...field} value={field.value || ""} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div>
+              <label>Copies</label>
+              <FormField
+                control={form.control}
+                name="copies"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel />
+                    <FormControl>
+                      <Input
+                        type="number"
+                        min={0}
+                        {...field}
+                        value={field.value || ""}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <DialogFooter className="mt-5">
+              <DialogClose asChild>
+                <Button variant="outline">Cancel</Button>
+              </DialogClose>
+              <Button type="submit">Save changes</Button>
+            </DialogFooter>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
+  );
+}
