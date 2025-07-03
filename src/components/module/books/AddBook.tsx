@@ -34,6 +34,7 @@ export function AddBook() {
     // console.log("my books", data);
     try {
       const res = await createBook(data).unwrap();
+      console.log(res);
       toast.success("✅ Book added successfully!");
       form.reset();
       setOpen(false);

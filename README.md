@@ -2,7 +2,7 @@
 A simple clean and featureful UI for managing books in a library system. User can easy navigate between pages, clearly labeled buttons, and simple forms with responsiveness for all devices.
 
 
-###  Live link: 
+###  Live link: https://lms-frontend-gray-iota.vercel.app/
 
 #### 🛠️ Technologies used: React, TypeScript, Redux toolkit, RTK-Query, Shadcn, TailwindCSS .
 
