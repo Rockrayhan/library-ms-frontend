@@ -12,6 +12,7 @@ import { EditBook } from "./EditBook";
 import { useDeleteBookMutation } from "@/redux/api/baseApi";
 import { toast } from "sonner";
 import { Link } from "react-router";
+import { BorrowBook } from "./BorrowBook";
 
 export function SingleBook({ item }: { item: IBook }) {
   const [deleteBook, { isLoading }] = useDeleteBookMutation();
@@ -29,9 +30,9 @@ export function SingleBook({ item }: { item: IBook }) {
   };
 
   return (
-    <Card className="w-full max-w-sm col-span-1 my-5 shadow-md">
+    <Card className="w-full max-w-sm col-span-1 my-5 hover:shadow-teal-700 shadow-md ">
       <CardHeader>
-        <CardTitle className="text-2xl">{item.title}</CardTitle>
+        <CardTitle className="text-2xl text-teal-300">{item.title}</CardTitle>
         <CardDescription>
           {item.description || "No description provided."}
         </CardDescription>
@@ -56,7 +57,7 @@ export function SingleBook({ item }: { item: IBook }) {
           </span>
         </p>
       </CardContent>
-      <CardFooter className="flex gap-2.5">
+      <CardFooter className="flex gap-2.5 flex-wrap">
         <p> Actions : </p>
 
         <EditBook book={item} />
@@ -69,8 +70,21 @@ export function SingleBook({ item }: { item: IBook }) {
           {isLoading ? "Deleting..." : "Delete"}
         </Button>
 
-        <Link to={`/books/${item._id}`}>
-          <Button> See More </Button>
+        {item.available == true ? (
+          <button>
+            <BorrowBook book={item} />
+          </button>
+        ) : (
+          <Button className="bg-slate-600 hover:bg-slate-600 w-full sm:w-auto">  Unavailabe </Button>
+        )}
+      </CardFooter>
+
+      <CardFooter>
+        <Link
+          to={`/books/${item._id}`}
+          className="text-teal-400 hover:underline"
+        >
+          See More ⮞
         </Link>
       </CardFooter>
     </Card>

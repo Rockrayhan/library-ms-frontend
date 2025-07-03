@@ -1,3 +1,4 @@
+import { Footer } from "./components/layouts/Footer";
 import Navbar from "./components/layouts/Navbar";
 import { Toaster } from "./components/ui/sonner";
 import "./index.css";
@@ -7,8 +8,15 @@ function App() {
   return (
     <>
       <Navbar />
+
       <Toaster position="top-right" closeButton={true}/>
+
+      <div className="container">
       <Outlet />
+      </div>
+
+
+      <Footer/>
     </>
   );
 }

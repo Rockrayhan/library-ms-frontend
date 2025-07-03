@@ -16,11 +16,15 @@ const Books = () => {
   }
 
   return (
-    <div className="container">
-      <h1> This is tasks page </h1>
+    <div>
+      <h2 className="text-teal-300 text-4xl text-center font-bold my-6"> Here Are All {books.length} Books </h2>
+
       <AddBook />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+
+
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {books.map((item: any) => (
           <SingleBook key={item._id} item={item} />
         ))}

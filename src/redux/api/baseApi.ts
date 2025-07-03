@@ -45,6 +45,21 @@ export const baseApi = createApi({
       }),
       invalidatesTags: ["book"],
     }),
+
+    // borrow single book
+    borrowBook: builder.mutation({
+      query: (borrowData) => ({
+        url: "/borrow",
+        method: "POST",
+        body: borrowData, // should include { book, quantity, dueDate }
+      }),
+      invalidatesTags: ["book"],
+    }),
+
+    // borrow summery
+    getBorrowedBooksSummary: builder.query({
+      query: () => "/borrow",
+    }),
   }),
 });
 
@@ -54,4 +69,6 @@ export const {
   useUpdateBookMutation,
   useDeleteBookMutation,
   useGetBookByIdQuery,
+  useBorrowBookMutation,
+  useGetBorrowedBooksSummaryQuery,
 } = baseApi;

@@ -51,7 +51,7 @@ export function AddBook() {
       {/* {isError && <p className="text-red-500">Something went wrong.</p>} */}
 
       <DialogTrigger asChild>
-        <Button variant="destructive"> Add Task </Button>
+        <Button className="bg-teal-400"> Add Book </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
