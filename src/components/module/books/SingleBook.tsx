@@ -8,21 +8,46 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import type { IBook } from "@/types";
-
-
+import { EditBook } from "./EditBook";
+import { useDeleteBookMutation } from "@/redux/api/baseApi";
+import { toast } from "sonner";
 
 export function SingleBook({ item }: { item: IBook }) {
+  const [deleteBook, { isLoading }] = useDeleteBookMutation();
+
+  const handleDelete = async () => {
+    if( confirm("Are you sure you want to delete ?") ) {
+            try {
+      await deleteBook(item._id!).unwrap();
+      toast.success("✅ Book deleted successfully!");
+    } catch (error) {
+      toast.error("❌ Failed to delete book.");
+      console.error(error);
+    }
+    } 
+  };
+
   return (
     <Card className="w-full max-w-sm col-span-1 my-5 shadow-md">
       <CardHeader>
         <CardTitle className="text-2xl">{item.title}</CardTitle>
-        <CardDescription>{item.description || "No description provided."}</CardDescription>
+        <CardDescription>
+          {item.description || "No description provided."}
+        </CardDescription>
       </CardHeader>
       <CardContent className="space-y-2 text-sm text-muted-foreground">
-        <p><strong>Author:</strong> {item.author}</p>
-        <p><strong>Genre:</strong> {item.genre}</p>
-        <p><strong>ISBN:</strong> {item.isbn}</p>
-        <p><strong>Copies:</strong> {item.copies}</p>
+        <p>
+          <strong>Author:</strong> {item.author}
+        </p>
+        <p>
+          <strong>Genre:</strong> {item.genre}
+        </p>
+        <p>
+          <strong>ISBN:</strong> {item.isbn}
+        </p>
+        <p>
+          <strong>Copies:</strong> {item.copies}
+        </p>
         <p>
           <strong>Available:</strong>{" "}
           <span className={item.available ? "text-green-600" : "text-red-500"}>
@@ -30,9 +55,17 @@ export function SingleBook({ item }: { item: IBook }) {
           </span>
         </p>
       </CardContent>
-      <CardFooter>
-        <Button className="w-full" variant="outline">
-          Actions
+      <CardFooter className="flex gap-2.5">
+        <p> Actions : </p>
+
+        <EditBook book={item} />
+
+        <Button
+          className="bg-red-700"
+          onClick={handleDelete}
+          disabled={isLoading}
+        >
+          {isLoading ? "Deleting..." : "Delete"}
         </Button>
       </CardFooter>
     </Card>

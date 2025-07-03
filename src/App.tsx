@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <Toaster position="top-right"/>
+      <Toaster position="top-right" closeButton={true}/>
       <Outlet />
     </>
   );
