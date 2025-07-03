@@ -11,7 +11,7 @@ function App() {
 
       <Toaster position="top-right" closeButton={true}/>
 
-      <div className="container">
+      <div className="container min-h-screen">
       <Outlet />
       </div>
 

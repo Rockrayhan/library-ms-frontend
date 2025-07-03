@@ -3,7 +3,6 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -27,7 +26,7 @@ export function AddBook() {
   const [open, setOpen] = useState(false);
   const form = useForm<IBook>();
 
-  const [createBook, { data, isError, isLoading }] = useCreateBookMutation();
+  const [createBook, { isLoading }] = useCreateBookMutation();
   
 
 
@@ -55,10 +54,8 @@ export function AddBook() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add task</DialogTitle>
-          <DialogDescription>
-            Add task that only you can finish.
-          </DialogDescription>
+          <DialogTitle>Add a Book</DialogTitle>
+
         </DialogHeader>
         <Form {...form}>
           <form action="" onSubmit={form.handleSubmit(onSubmit)}>

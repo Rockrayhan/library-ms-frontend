@@ -1,3 +1,4 @@
+import { SkeletonCard } from "@/components/layouts/SkeletonCard";
 import { useGetBorrowedBooksSummaryQuery } from "@/redux/api/baseApi";
 
 
@@ -5,7 +6,13 @@ const BorrowSummary = () => {
   const { data: response, isLoading, error } = useGetBorrowedBooksSummaryQuery(undefined);
   const borrowedBooks = response?.data || [];
 
-  if (isLoading) return <p>Loading summary...</p>;
+    if (isLoading) {
+      return (
+        <>
+          <SkeletonCard />
+        </>
+      );
+    }
   if (error) return <p>Error loading borrowed books summary.</p>;
 
   return (
