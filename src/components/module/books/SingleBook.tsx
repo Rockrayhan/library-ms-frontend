@@ -11,20 +11,21 @@ import type { IBook } from "@/types";
 import { EditBook } from "./EditBook";
 import { useDeleteBookMutation } from "@/redux/api/baseApi";
 import { toast } from "sonner";
+import { Link } from "react-router";
 
 export function SingleBook({ item }: { item: IBook }) {
   const [deleteBook, { isLoading }] = useDeleteBookMutation();
 
   const handleDelete = async () => {
-    if( confirm("Are you sure you want to delete ?") ) {
-            try {
-      await deleteBook(item._id!).unwrap();
-      toast.success("✅ Book deleted successfully!");
-    } catch (error) {
-      toast.error("❌ Failed to delete book.");
-      console.error(error);
+    if (confirm("Are you sure you want to delete ?")) {
+      try {
+        await deleteBook(item._id!).unwrap();
+        toast.success("✅ Book deleted successfully!");
+      } catch (error) {
+        toast.error("❌ Failed to delete book.");
+        console.error(error);
+      }
     }
-    } 
   };
 
   return (
@@ -67,6 +68,10 @@ export function SingleBook({ item }: { item: IBook }) {
         >
           {isLoading ? "Deleting..." : "Delete"}
         </Button>
+
+        <Link to={`/books/${item._id}`}>
+          <Button> See More </Button>
+        </Link>
       </CardFooter>
     </Card>
   );
