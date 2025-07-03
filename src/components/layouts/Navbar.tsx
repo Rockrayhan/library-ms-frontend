@@ -14,7 +14,7 @@ const Navbar = () => {
         <div className="hidden md:flex space-x-6">
           <Link to="/" className="hover:text-gray-200">Home</Link>
           <Link to="/users" className="hover:text-gray-200">Users</Link>
-          <Link to="/tasks" className="hover:text-gray-200">Tasks</Link>
+          <Link to="/tasks" className="hover:text-gray-200">Books</Link>
         </div>
 
         {/* Mobile Menu Button */}

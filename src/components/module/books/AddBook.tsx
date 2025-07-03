@@ -18,33 +18,37 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useCreateBookMutation } from "@/redux/api/baseApi";
+import type { IBook } from "@/types";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 export function AddBook() {
   const [open, setOpen] = useState(false);
-  const form = useForm();
+  const form = useForm<IBook>();
 
   const [createBook, { data, isError, isLoading }] = useCreateBookMutation();
-
-  const onSubmit = async (data: any) => {
-    console.log("my books", data);
-    const bookData = {
-      ...data,
-    };
-
-    const res = await createBook(bookData).unwrap();
-
-    setOpen(false);
-    form.reset();
-  };
-
   
+
+
+  const onSubmit = async (data: IBook) => {
+    // console.log("my books", data);
+    try {
+      const res = await createBook(data).unwrap();
+      toast.success("✅ Book added successfully!");
+      form.reset();
+      setOpen(false);
+    } catch (err) {
+      toast.error("❌ Failed to add book.");
+      console.error(err);
+    }
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
+
       {isLoading && <p>Submitting book...</p>}
-      {isError && <p className="text-red-500">Something went wrong.</p>}
+      {/* {isError && <p className="text-red-500">Something went wrong.</p>} */}
 
       <DialogTrigger asChild>
         <Button variant="destructive"> Add Task </Button>
@@ -99,7 +103,7 @@ export function AddBook() {
                   <FormItem>
                     <FormLabel />
                     <FormControl>
-                      <select {...field} className="w-full border p-2 rounded">
+                      <select {...field} className="w-full border p-2 rounded bg-black">
                         <option value="">Select genre</option>
                         <option value="FICTION">FICTION</option>
                         <option value="NON_FICTION">NON_FICTION</option>
@@ -155,7 +159,7 @@ export function AddBook() {
               <DialogClose asChild>
                 <Button variant="outline">Cancel</Button>
               </DialogClose>
-              <Button type="submit">Save changes</Button>
+              <Button type="submit"> Add Book </Button>
             </DialogFooter>
           </form>
         </Form>
